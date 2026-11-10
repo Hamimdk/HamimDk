@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HamimDk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#363636; --bg-deep:#2b2b2b; --ink:#ffffff; --muted:#d4d4d4; --pink:#ff0a5c;
+  box-sizing:border-box; color-scheme:dark;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:auto}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,sans-serif;line-height:1.7;position:relative;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* build effect: elements start invisible, cursors reveal them */
+.js [data-b]{opacity:0;transform:translateY(8px) scale(.985);transition:opacity .22s ease,transform .22s ease}
+.js [data-b].in{opacity:1;transform:none}
+[data-b].sel{outline:2px dashed var(--c,#fff);outline-offset:6px}
+.cur{position:absolute;left:0;top:0;z-index:100;pointer-events:none;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s;opacity:0}
+.cur svg{display:block;width:20px;height:20px;fill:var(--c)}
+.cur span{position:absolute;left:16px;top:18px;background:var(--c);color:#111;font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top,0px)) 5vw 14px;background:rgba(30,30,30,.92)}
+.logo{font-weight:600;font-size:1.5rem;font-style:italic;color:var(--pink);letter-spacing:.5px}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:.8rem;font-weight:500}
+nav a.active{color:var(--pink)}
+
+.hero{position:relative;min-height:560px;margin-top:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 6vw 120px;overflow:hidden;border-radius:0 0 50% 50% / 0 0 24% 24%}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(circle at 18% 70%,rgba(255,10,92,.35),transparent 28%),
+  radial-gradient(circle at 80% 30%,rgba(255,160,60,.30),transparent 26%),
+  radial-gradient(circle at 60% 85%,rgba(60,200,255,.22),transparent 30%),
+  linear-gradient(160deg,#1c1d27,#3b3340 55%,#2a2a2a)}
+.hero>*:not(.hero-bg){position:relative}
+h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:500;margin:0 0 6px;line-height:1.15}
+.sub{max-width:20ch;margin:0 auto 22px;font-size:1rem}
+.btn{display:inline-block;background:var(--pink);color:#fff;font-weight:600;font-size:.75rem;padding:10px 28px;border-radius:3px}
+
+.about{max-width:1000px;margin:70px auto;padding:0 6vw;display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:56px;align-items:center}
+.frame{position:relative;padding:0 0 0 0}
+.frame .pink{background:var(--pink);padding:14px 14px 14px 14px;position:relative}
+.photo{background:linear-gradient(#1b1b1b,#2d2d2d);aspect-ratio:3/4;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.photo svg{width:78%;fill:#555}
+.badge{position:absolute;left:-18px;bottom:36px;background:var(--pink);width:104px;padding:12px 8px;text-align:center;font-size:.8rem;line-height:1.3;box-shadow:0 0 0 4px var(--bg)}
+.badge b{display:block;font-size:1.3rem}
+.rule{width:64px;height:3px;background:var(--pink);margin-bottom:14px}
+h2{font-size:1.7rem;font-weight:500;margin:0 0 14px}
+.text p{margin:0 0 18px;color:var(--muted);font-size:.9rem;max-width:56ch}
+.text h3{font-size:1.05rem;font-weight:600;margin:24px 0 6px}
+.hobbies{margin:0 0 22px;padding-left:20px;color:var(--muted);font-size:.9rem}
+.hobbies li::marker{color:var(--pink)}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.links a{border:2px solid var(--pink);padding:6px 20px;font-size:.8rem;font-weight:500;border-radius:3px;transition:background .2s}
+.links a:hover,.links a:focus-visible{background:var(--pink)}
+a:focus-visible,button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+#replay{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:200;background:#111;color:#fff;border:1px solid #555;border-radius:20px;padding:8px 16px;font:500 .75rem Poppins,sans-serif;cursor:pointer}
+
+@media (max-width:760px){
+  nav ul{gap:14px;font-size:.7rem}
+  nav ul li:nth-child(n+4){display:none}
+  .about{grid-template-columns:1fr;gap:40px}
+  .frame{max-width:300px;margin:0 auto}
+  .badge{left:-8px}
+}
+@media (prefers-reduced-motion:reduce){.js [data-b]{transition:none}}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<nav>
+  <a class="logo" href="#" data-b>HamimDk</a>
+  <ul>
+    <li data-b><a class="active" href="#">Home</a></li>
+    <li data-b><a href="#about">About</a></li>
+    <li data-b><a href="#hobbies">Hobbies</a></li>
+    <li data-b><a href="#links">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg" data-b></div>
+  <h1 data-b>Hi, I’m HamimDk</h1>
+  <p class="sub" data-b>Full stack web developer and tech tinkerer</p>
+  <a class="btn" href="#links" data-b>HIRE ME</a>
+</header>
+
+<main class="about" id="about">
+  <div class="frame" data-b>
+    <div class="pink">
+      <!-- Replace the silhouette with your photo: <img src="me.jpg" alt="HamimDk"> -->
+      <div class="photo">
+        <svg viewBox="0 0 100 120" aria-hidden="true"><circle cx="50" cy="38" r="22"/><path d="M6 120c0-30 20-48 44-48s44 18 44 48z"/></svg>
+      </div>
+    </div>
+    <div class="badge"><b>Full Stack</b>Developer</div>
+  </div>
+
+  <div class="text">
+    <div class="rule" data-b></div>
+    <h2 data-b>Introduction About Me</h2>
+    <p data-b>Welcome to my corner of the internet. I am passionate about creating, coding, and exploring new technologies.</p>
+    <h3 id="hobbies" data-b>My Hobbies</h3>
+    <ul class="hobbies">
+      <li data-b>Full stack web development</li>
+      <li data-b>Exploring AI and automation</li>
+      <li data-b>Gaming and tech tinkering</li>
+    </ul>
+    <div class="links" id="links">
+      <a href="https://facebook.com" target="_blank" rel="noopener" data-b>Facebook</a>
+      <a href="https://instagram.com" target="_blank" rel="noopener" data-b>Instagram</a>
+      <a href="https://github.com" target="_blank" rel="noopener" data-b>GitHub</a>
+    </div>
+  </div>
+</main>
+
+<button id="replay" type="button">Replay build</button>
+
+<script>
+(function(){
+  var els=[].slice.call(document.querySelectorAll('[data-b]'));
+  var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms)})};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var people=[['Hamim','#ff0a5c'],['Sam','#22d3ee'],['Nora','#facc15'],['Leo','#a3e635'],['Mia','#c084fc'],['Zed','#fb923c'],['Ava','#38bdf8'],['Kai','#f472b6'],['Ravi','#34d399'],['Ivy','#fde047'],['Omar','#60a5fa'],['Lena','#f87171']];
+  var cursors=people.map(function(p){
+    var c=document.createElement('div');c.className='cur';c.style.setProperty('--c',p[1]);
+    c.innerHTML='<svg viewBox="0 0 20 20"><path d="M2 1l15 8-6.5 1.8L8 17z"/></svg><span>'+p[0]+'</span>';
+    document.body.appendChild(c);return c;
+  });
+  var btn=document.getElementById('replay'),running=false;
+
+  function revealAll(){els.forEach(function(e){e.classList.add('in')});cursors.forEach(function(c){c.style.opacity=0})}
+
+  var rnd=function(a,b){return a+Math.random()*(b-a)};
+  async function run(){
+    if(running)return;running=true;btn.disabled=true;
+    els.forEach(function(e){e.classList.remove('in','sel')});
+    window.scrollTo(0,0);await sleep(300);
+    cursors.forEach(function(c){
+      c.style.transition='none';
+      c.style.transform='translate('+rnd(innerWidth*.05,innerWidth*.88)+'px,'+rnd(innerHeight*.1,innerHeight*.85)+'px)';
+      void c.offsetWidth;c.style.transition='';
+      setTimeout(function(){c.style.opacity=1},Math.random()*500);
+    });
+    await sleep(500);
+    var queue=els.slice(),scrolling=false;
+    await Promise.all(cursors.map(function(cur,k){return (async function(){
+      var col=people[k][1];
+      await sleep(Math.random()*250);
+      while(queue.length){
+        var el=queue.shift();
+        var r=el.getBoundingClientRect(),top=r.top+scrollY;
+        if((r.bottom>innerHeight-60||r.top<70)&&!scrolling){scrolling=true;window.scrollTo({top:top-innerHeight*.35,behavior:'smooth'});setTimeout(function(){scrolling=false},350)}
+        var x=r.left+scrollX+r.width*rnd(.2,.8),y=top+r.height*rnd(.3,.7);
+        cur.style.transform='translate('+x+'px,'+y+'px)';
+        await sleep(rnd(200,320));
+        el.style.setProperty('--c',col);el.classList.add('sel');
+        setTimeout(function(){el.classList.add('in')},60);
+        setTimeout(function(){el.classList.remove('sel')},300);
+        await sleep(rnd(30,140));
+      }
+    })()}));
+    await sleep(700);
+    cursors.forEach(function(c){c.style.opacity=0});
+    running=false;btn.disabled=false;
+  }
+
+  btn.addEventListener('click',run);
+  if(reduce){revealAll();btn.hidden=true}else{run()}
+})();
+</script>
+</body>
+</html>
